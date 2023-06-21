@@ -1,0 +1,21 @@
+select 
+sinh_vien.*,
+from sinh_vien
+join lop on lop.ma = sinh_vien.ma_lop
+where ma_lop = 3
+limit 100
+
+tối ưu:
+explain select 
+sv.*,
+l.ten
+from
+(
+select * from sinh_vien where ma_lop = 3
+limit 100 offset 3
+)  as sv
+join 
+(
+    select ma, ten from lop where ma_lop = 3
+) as l
+on l.ma = sv.ma_lop
